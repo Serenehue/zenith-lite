@@ -1,0 +1,90 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h1>Zenith</h1>
+
+
+<div class="card">
+    <h2>Weather</h2>
+    {% if weather %}
+        <p>{{ weather.city }}</p>
+        <p>{{ weather.temp }} °C</p>
+        <p>{{ weather.desc }}</p>
+    {% else %}
+        <p>Weather unavailable</p>
+    {% endif %}
+</div>
+
+
+<div class="card">
+    <h2>Focus Timer</h2>
+    <div id="timer">25:00</div>
+    <button onclick="startTimer()">Start</button>
+    <button onclick="pauseTimer()">Pause</button>
+    <button onclick="resetTimer()">Reset</button>
+</div>
+
+
+<div class="card">
+    <h2>To-Do List</h2>
+    <form action="/add" method="post">
+        <input type="text" name="task" placeholder="New task" required>
+        <button>Add</button>
+    </form>
+
+ <ul>
+    {% for todo in todos %}
+    <li>
+        <a href="/toggle/{{ todo.id }}" class="todo-toggle">
+            {% if todo.done %}
+                ✔
+            {% else %}
+                ○
+            {% endif %}
+        </a>
+
+        {{ todo.task }}
+
+        <a href="/delete/{{ todo.id }}" class="todo-delete">✖</a>
+    </li>
+    {% endfor %}
+</ul>
+
+
+</div>
+
+
+<div class="card">
+    <h2>Daily Checklist</h2>
+
+    <label>
+        <input type="checkbox" class="check-item" data-key="study">
+        Study
+    </label><br>
+
+    <label>
+        <input type="checkbox" class="check-item" data-key="exercise">
+        Exercise
+    </label><br>
+
+    <label>
+        <input type="checkbox" class="check-item" data-key="water">
+        Drink Water
+    </label><br>
+</div>
+
+<div class="card">
+    <h2>Motivation</h2>
+    <p id="quote-text">Stay focused and keep going.</p>
+    <button onclick="newQuote()">New Quote</button>
+</div>
+
+
+<div class="card">
+    <h2>Appearance</h2>
+    <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
+</div>
+
+
+
+{% endblock %}
